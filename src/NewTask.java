@@ -1,4 +1,9 @@
 import javax.swing.*;
+import javax.swing.text.MaskFormatter;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,20 +20,18 @@ public class NewTask extends JFrame {
     private JTextField commentTextField;
     private JComboBox comboBox1;
     private JComboBox comboBox2;
-    private JTextField deadLineDdMmTextField;
-    private JFormattedTextField FormattedTextField;
+    private JTextField deadLineYYYYMMTextField;
     private JPanel taskPanel;
+    private JFormattedTextField formattedDateTimeField;
 
 
     public NewTask() {
         super("New task");
         setContentPane(rootPanel);
         pack();
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        /*
-         * Subjects
-         */
+        // Subjects
         String[] subjects = new String[]{"Algebra", "English", "Mechanical drawing"};
         String[] commonTasks = {"Test (A/B/C)", "Course work"};
 
@@ -47,7 +50,6 @@ public class NewTask extends JFrame {
         for (String subject : subjects) {
             comboBox1.addItem(subject);
         }
-        //comboBox1.setSelectedIndex(1);
 
         comboBox1.addActionListener(e -> {
             comboBox2.removeAllItems();
@@ -62,17 +64,23 @@ public class NewTask extends JFrame {
             }
         });
 
-        /*
-         * Dead-line
-         */
-        // TODO: 27.04.2016 add datetime formatter
+        // Dead-line
+        DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm");
+        Date date = new Date();
+        formattedDateTimeField.setValue(dateFormat.format(date));
+        try {
+            MaskFormatter formatter = new MaskFormatter("####.##.## ##:##");
+            formatter.setPlaceholderCharacter('_');
+            formatter.install(formattedDateTimeField);
+        } catch (ParseException e) {
+            System.err.println("Unable to add SSN");
+        }
 
-        /*
-         * Button click
-         */
+        // Button click
         clickButton.addActionListener(e -> {
             JOptionPane.showMessageDialog(NewTask.this, "Task added.");
             // TODO: 26.04.2016 add task accept
+            // TODO: 27.04.2016 check date & time, show message if it's wrong
         });
 
         setVisible(true);

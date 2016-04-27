@@ -93,7 +93,7 @@
             </constraints>
             <properties/>
           </component>
-          <component id="bc8d5" class="javax.swing.JTextField" binding="deadLineDdMmTextField" default-binding="true">
+          <component id="bc8d5" class="javax.swing.JTextField" binding="deadLineYYYYMMTextField" default-binding="true">
             <constraints>
               <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="4" fill="0" indent="1" use-parent-layout="false">
                 <preferred-size width="200" height="-1"/>
@@ -102,18 +102,16 @@
             </constraints>
             <properties>
               <editable value="false"/>
-              <text value="Dead-line (dd.mm.yyyy  hh:mm)"/>
+              <text value="Dead-line (YYYY.MM.DD  hh:mm)"/>
             </properties>
           </component>
-          <component id="48c51" class="javax.swing.JFormattedTextField" binding="FormattedTextField">
+          <component id="6bc73" class="javax.swing.JFormattedTextField" binding="formattedDateTimeField" default-binding="true">
             <constraints>
               <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="0" indent="0" use-parent-layout="false">
-                <preferred-size width="250" height="-1"/>
+                <preferred-size width="250" height="25"/>
               </grid>
             </constraints>
-            <properties>
-              <text value=""/>
-            </properties>
+            <properties/>
           </component>
         </children>
       </grid>
