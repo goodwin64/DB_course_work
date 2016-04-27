@@ -3,6 +3,7 @@ import javax.swing.text.MaskFormatter;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -78,9 +79,29 @@ public class NewTask extends JFrame {
 
         // Button click
         clickButton.addActionListener(e -> {
-            JOptionPane.showMessageDialog(NewTask.this, "Task added.");
-            // TODO: 26.04.2016 add task accept
-            // TODO: 27.04.2016 check date & time, show message if it's wrong
+            /* Entered date must be the following:
+             * now < date < (now + 3 month)
+             */
+            Date enteredDate = new Date();
+            try {
+                SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd HH:mm");
+                enteredDate = format.parse(formattedDateTimeField.getText());
+            } catch (ParseException pe) {
+                throw new IllegalArgumentException();
+            }
+            Calendar calendar = Calendar.getInstance();
+            calendar.add(Calendar.MONTH, 3);
+            Date inThreeMonths = calendar.getTime();
+
+            boolean isPast = new Date().compareTo(enteredDate) == 1;
+            boolean isFuture = inThreeMonths.compareTo(enteredDate) == -1;
+
+            if (isPast || isFuture) {
+                JOptionPane.showMessageDialog(NewTask.this, "Wrong date!");
+            } else {
+                JOptionPane.showMessageDialog(NewTask.this, "Task added.");
+                // TODO: 26.04.2016 add task accept
+            }
         });
 
         setVisible(true);
