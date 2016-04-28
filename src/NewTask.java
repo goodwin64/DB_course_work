@@ -13,15 +13,15 @@ import java.util.Map;
  */
 public class NewTask extends JFrame {
 
-    private JButton clickButton;
+    private JButton submitButton;
     private JPanel rootPanel;
     private JTextField subjectTextField;
-    private JTextPane textPane1;
+    private JTextPane taskTextArea;
     private JTextField taskTextField;
     private JTextField commentTextField;
-    private JComboBox comboBox1;
-    private JComboBox comboBox2;
-    private JTextField deadLineYYYYMMTextField;
+    private JComboBox subjectsComboBox;
+    private JComboBox tasksComboBox;
+    private JTextField deadlineTextField;
     private JPanel taskPanel;
     private JFormattedTextField formattedDateTimeField;
 
@@ -49,18 +49,18 @@ public class NewTask extends JFrame {
         });
 
         for (String subject : subjects) {
-            comboBox1.addItem(subject);
+            subjectsComboBox.addItem(subject);
         }
 
-        comboBox1.addActionListener(e -> {
-            comboBox2.removeAllItems();
-            String[] tasks = specialTasks.get(comboBox1.getSelectedItem());
+        subjectsComboBox.addActionListener(e -> {
+            tasksComboBox.removeAllItems();
+            String[] tasks = specialTasks.get(subjectsComboBox.getSelectedItem());
             if (tasks != null) {
                 for (String commonTask : commonTasks) {
-                    comboBox2.addItem(commonTask);
+                    tasksComboBox.addItem(commonTask);
                 }
                 for (String specialTask : tasks) {
-                    comboBox2.addItem(specialTask);
+                    tasksComboBox.addItem(specialTask);
                 }
             }
         });
@@ -78,7 +78,7 @@ public class NewTask extends JFrame {
         }
 
         // Button click
-        clickButton.addActionListener(e -> {
+        submitButton.addActionListener(e -> {
             /* Entered date must be the following:
              * now < date < (now + 3 month)
              */
@@ -104,6 +104,8 @@ public class NewTask extends JFrame {
             }
         });
 
+        setResizable(false);
+        setLocationRelativeTo(null);
         setVisible(true);
     }
 }
