@@ -1,12 +1,17 @@
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import java.sql.*;
 
 /**
  * Created by Max Donchenko (https://github.com/goodwin64) on 26.04.2016.
  */
 public class Authorization extends JFrame {
-    JTextField loginField;
-    JPasswordField passwordField;
+    private static final String SQL_URL = "jdbc:mysql://localhost:3306/solving_tasks";
+    private static final String SQL_USER = "root";
+    private static final String SQL_PASS = "root";
+    private JTextField loginField;
+    private JPasswordField passwordField;
+    private JButton okButton;
 
     public Authorization() {
         super("Authorization");
@@ -19,6 +24,8 @@ public class Authorization extends JFrame {
         box1.add(loginLabel);
         box1.add(Box.createHorizontalStrut(6));
         box1.add(loginField);
+        loginField.setText("test");
+        loginField.addActionListener(e -> okButton.doClick());
 
         // Second horizontal panel (for password)
         Box box2 = Box.createHorizontalBox();
@@ -27,15 +34,17 @@ public class Authorization extends JFrame {
         box2.add(passwordLabel);
         box2.add(Box.createHorizontalStrut(6));
         box2.add(passwordField);
+        passwordField.setText("test");
+        passwordField.addActionListener(e -> okButton.doClick());
 
         // Third horizontal panel (for buttons)
         Box box3 = Box.createHorizontalBox();
-        JButton ok = new JButton("OK");
-        JButton cancel = new JButton("Cancel");
+        okButton = new JButton("OK");
+        JButton cancelButton = new JButton("Cancel");
         box3.add(Box.createHorizontalGlue());
-        box3.add(ok);
+        box3.add(okButton);
         box3.add(Box.createHorizontalStrut(12));
-        box3.add(cancel);
+        box3.add(cancelButton);
 
         // Set login panel size equals to password panel size
         loginLabel.setPreferredSize(passwordLabel.getPreferredSize());
@@ -49,10 +58,45 @@ public class Authorization extends JFrame {
         mainBox.add(Box.createVerticalStrut(17));
         mainBox.add(box3);
 
+        okButton.addActionListener(e -> sendData());
+        cancelButton.addActionListener(e -> System.exit(0));
+
         setContentPane(mainBox);
         pack();
+        getRootPane().setDefaultButton(okButton);
+
         setResizable(false);
         setLocationRelativeTo(null);
         setVisible(true);
+    }
+
+    private void sendData() {
+        String enteredLogin = loginField.getText();
+        String enteredPassword = String.valueOf(passwordField.getPassword());
+        String getUserQuery = "SELECT * FROM users WHERE login=? AND `password`=?";
+
+        PreparedStatement preparedStatement;
+        ResultSet rs = null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection connection = DriverManager.getConnection(SQL_URL, SQL_USER, SQL_PASS);
+            preparedStatement = connection.prepareStatement(getUserQuery);
+            preparedStatement.setString(1, enteredLogin);
+            preparedStatement.setString(2, enteredPassword);
+            rs = preparedStatement.executeQuery();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+
+        try {
+            if (rs != null && rs.next()) {
+                JOptionPane.showMessageDialog(null, "Hi, " + rs.getString("name"));
+            } else {
+                JOptionPane.showMessageDialog(null, "Wrong login or password!");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
