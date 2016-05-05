@@ -5,9 +5,8 @@ Project for "Databases" subject. KPI, 2016.
 <img src="http://i.imgur.com/H0KULL8.png"></img><br><hr>
 <img src="http://i.imgur.com/t0I5V1j.png"></img><br><hr>
 <img src="http://i.imgur.com/AKLSyFw.png"></img><br><hr>
-<img src="http://i.imgur.com/NwTtCHU.png"></img><br><hr>
-<img src="http://i.imgur.com/PqbXuJg.png"></img><br><hr>
-<img src="http://i.imgur.com/xhYRPgV.png"></img><br><hr>
-<img src="http://i.imgur.com/cpz44t9.png"></img><br><hr>
-<img src="http://i.imgur.com/AD2Ipf9.png"></img><br><hr>
-<img src="http://i.imgur.com/DvIfLLx.png"></img><br><hr>
+<img src="http://i.imgur.com/EqUsqpq.png"></img><br><hr>
+<img src="http://i.imgur.com/UTuug2w.png"></img><br><hr>
+<img src="http://i.imgur.com/nN1hzMJ.png"></img><br><hr>
+<img src="http://i.imgur.com/h30ACrk.png"></img><br><hr>
+<img src="http://i.imgur.com/hG0vCNn.png"></img><br><hr>

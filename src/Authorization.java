@@ -6,9 +6,9 @@ import java.sql.*;
  * Created by Max Donchenko (https://github.com/goodwin64) on 26.04.2016.
  */
 public class Authorization extends JFrame {
-    private static final String SQL_URL = "jdbc:mysql://localhost:3306/solving_tasks";
-    private static final String SQL_USER = "root";
-    private static final String SQL_PASS = "root";
+    static final String SQL_URL = "jdbc:mysql://localhost:3306/solving_tasks";
+    static final String SQL_USER = "root";
+    static final String SQL_PASS = "root";
     private JTextField loginField;
     private JPasswordField passwordField;
     private JButton okButton;
@@ -70,7 +70,7 @@ public class Authorization extends JFrame {
         setVisible(true);
     }
 
-    private void sendData() {
+    public void sendData() {
         String enteredLogin = loginField.getText();
         String enteredPassword = String.valueOf(passwordField.getPassword());
         String getUserQuery = "SELECT * FROM users WHERE login=? AND `password`=?";
@@ -88,10 +88,11 @@ public class Authorization extends JFrame {
             e.printStackTrace();
         }
 
-
         try {
             if (rs != null && rs.next()) {
-                JOptionPane.showMessageDialog(null, "Hi, " + rs.getString("name"));
+                NewTask.main(new String[]{});
+                this.dispose();
+                Main.loggedUser = rs.getInt("id");
             } else {
                 JOptionPane.showMessageDialog(null, "Wrong login or password!");
             }
