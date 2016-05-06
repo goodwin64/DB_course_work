@@ -76,7 +76,7 @@ public class NewTask extends JFrame {
         submitButton.addActionListener(e -> {
             boolean isNotPast = jCalendar.getDate().compareTo(new Date()) == 1;
             if (checkSubject() && isNotPast) {
-                sendData(Main.loggedUserID);
+                sendData(Authorization.loggedUserID);
                 Object[] options = {"Yes, add another task", "No, quit"};
                 int choice = JOptionPane.showOptionDialog(null,
                         "Task added. Would you like to add another task or quit?", "Task added",
