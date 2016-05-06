@@ -31,7 +31,7 @@ public class TakeTask extends JFrame {
 
 
     public static void main(String[] args) {
-        JFrame frame = new JFrame("Create a task");
+        JFrame frame = new JFrame("Take a task");
         frame.setContentPane(new TakeTask().rootPanel);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
@@ -46,7 +46,7 @@ public class TakeTask extends JFrame {
         String getUserQuery = "SELECT * FROM orders WHERE is_done=0";
         String getSizeQuery = "SELECT COUNT(*) AS total FROM orders WHERE is_done=0";
 
-        PreparedStatement preparedStatement1;
+        PreparedStatement preparedStatement;
         ResultSet resultSet1 = null;
         int tableRowsCount = 0;
         try {
@@ -57,8 +57,8 @@ public class TakeTask extends JFrame {
                     Authorization.SQL_PASS
             );
             Statement statement = connection.createStatement();
-            preparedStatement1 = connection.prepareStatement(getUserQuery);
-            resultSet1 = preparedStatement1.executeQuery();
+            preparedStatement = connection.prepareStatement(getUserQuery);
+            resultSet1 = preparedStatement.executeQuery();
 
             ResultSet resultSet2 = statement.executeQuery(getSizeQuery);
             resultSet2.next();
