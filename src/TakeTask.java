@@ -42,30 +42,13 @@ public class TakeTask extends JFrame {
     }
 
     private JTable createTable() {
-        String[] columnNames = {"Subject", "Task", "Description", "Time left", "Price"};
-        ResultSet resultSet = getSqlTable();
-        Object[][] data = new Object[10][5];
-        int i = 0;
-        try {
-            while (resultSet.next()) {
-                int j = 0;
-                data[i][j++] = resultSet.getString("subject");
-                data[i][j++] = resultSet.getString("task");
-                data[i][j++] = resultSet.getString("description");
-                data[i][j++] = timeLeftInSeconds(resultSet.getDate("datetime_end"));
-                data[i][j++] = resultSet.getInt("price");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return new JTable(data, columnNames);
-    }
-
-    private ResultSet getSqlTable() {
+        // TODO: 06.05.2016 Reformat this nasty look crutch, move SQL actions into separate method
         String getUserQuery = "SELECT * FROM orders WHERE is_done=0";
+        String getSizeQuery = "SELECT COUNT(*) AS total FROM orders WHERE is_done=0";
 
-        PreparedStatement preparedStatement;
-        ResultSet rs = null;
+        PreparedStatement preparedStatement1;
+        ResultSet resultSet1 = null;
+        int tableRowsCount = 0;
         try {
             Class.forName("com.mysql.jdbc.Driver");
             Connection connection = DriverManager.getConnection(
@@ -73,12 +56,39 @@ public class TakeTask extends JFrame {
                     Authorization.SQL_USER,
                     Authorization.SQL_PASS
             );
-            preparedStatement = connection.prepareStatement(getUserQuery);
-            rs = preparedStatement.executeQuery();
+            Statement statement = connection.createStatement();
+            preparedStatement1 = connection.prepareStatement(getUserQuery);
+            resultSet1 = preparedStatement1.executeQuery();
+
+            ResultSet resultSet2 = statement.executeQuery(getSizeQuery);
+            resultSet2.next();
+            tableRowsCount = resultSet2.getInt("total");
+
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-        return rs;
+
+        String[] columnNames = {"Subject", "Task", "Description", "Time left", "Price"};
+        /* getSqlTable() is not in use because it doesn't return rows count
+           this nuance have to be fixed */
+        // ResultSet resultSet = getSqlTable();
+        Object[][] data = new Object[tableRowsCount][5];
+        int i = 0;
+        try {
+            if (resultSet1 != null) {
+                while (resultSet1.next()) {
+                    int j = 0;
+                    data[i][j++] = resultSet1.getString("subject");
+                    data[i][j++] = resultSet1.getString("task");
+                    data[i][j++] = resultSet1.getString("description");
+                    data[i][j++] = timeLeftInSeconds(resultSet1.getDate("datetime_end"));
+                    data[i++][j++] = resultSet1.getInt("price");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return new JTable(data, columnNames);
     }
 
     private int timeLeftInSeconds(Date deadLine) {
