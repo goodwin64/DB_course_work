@@ -16,7 +16,7 @@ public class NewTask extends JFrame {
 
     private JButton submitButton;
     private JPanel rootPanel;
-    private JTextPane taskTextArea;
+    private JTextPane descriptionTextArea;
     private JComboBox subjectsComboBox;
     private JComboBox tasksComboBox;
     private JCalendar jCalendar;
@@ -76,7 +76,7 @@ public class NewTask extends JFrame {
         submitButton.addActionListener(e -> {
             boolean isNotPast = jCalendar.getDate().compareTo(new Date()) == 1;
             if (checkSubject() && isNotPast) {
-                sendData(Main.loggedUser);
+                sendData(Main.loggedUserID);
                 Object[] options = {"Yes, add another task", "No, quit"};
                 int choice = JOptionPane.showOptionDialog(null,
                         "Task added. Would you like to add another task or quit?", "Task added",
@@ -110,8 +110,8 @@ public class NewTask extends JFrame {
 
     private void sendData(int id) {
         String getUserQuery = "INSERT INTO " +
-                "orders (id_customer, task, datetime_start, datetime_end) " +
-                "VALUES (?, ?, NOW(), ?)";
+                "orders (id_customer, `subject`, task, description, datetime_start, datetime_end, price) " +
+                "VALUES (?, ?, ?, ?, NOW(), ?, ?)";
 
         PreparedStatement preparedStatement;
         try {
@@ -123,8 +123,11 @@ public class NewTask extends JFrame {
             );
             preparedStatement = connection.prepareStatement(getUserQuery);
             preparedStatement.setInt(1, id);
-            preparedStatement.setString(2, taskTextArea.getText());
-            preparedStatement.setDate(3, new java.sql.Date(jCalendar.getDate().getTime()));
+            preparedStatement.setString(2, String.valueOf(subjectsComboBox.getSelectedItem()));
+            preparedStatement.setString(3, String.valueOf(tasksComboBox.getSelectedItem()));
+            preparedStatement.setString(4, descriptionTextArea.getText());
+            preparedStatement.setDate(5, new java.sql.Date(jCalendar.getDate().getTime()));
+            preparedStatement.setInt(6, 200);
             preparedStatement.executeUpdate();
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();

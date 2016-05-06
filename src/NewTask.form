@@ -28,7 +28,7 @@
               <text value="Submit"/>
             </properties>
           </component>
-          <component id="2b333" class="javax.swing.JTextPane" binding="taskTextArea" default-binding="true">
+          <component id="2b333" class="javax.swing.JTextPane" binding="descriptionTextArea" default-binding="true">
             <constraints>
               <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="9" fill="0" indent="0" use-parent-layout="false">
                 <preferred-size width="250" height="150"/>

@@ -90,14 +90,32 @@ public class Authorization extends JFrame {
 
         try {
             if (rs != null && rs.next()) {
-                NewTask.main(new String[]{});
-                this.dispose();
-                Main.loggedUser = rs.getInt("id");
+                Main.loggedUserID = rs.getInt("id");
+                Main.loggedUserType = rs.getInt("type");
             } else {
                 JOptionPane.showMessageDialog(null, "Wrong login or password!");
+                return;
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+
+        switch (Main.loggedUserType) {
+            case 1:
+                NewTask.main(new String[]{});
+                this.dispose();
+                break;
+            case 2:
+                TakeTask.main(new String[]{});
+                this.dispose();
+                break;
+            case 3:
+                // TODO: 06.05.2016 Admin panel
+                this.dispose();
+                break;
+            default:
+                // There is an error somewhere
+                break;
         }
     }
 }
