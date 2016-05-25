@@ -10,3 +10,4 @@ Project for "Databases" subject. KPI, 2016.
 <img src="http://i.imgur.com/nN1hzMJ.png"></img><br><hr>
 <img src="http://i.imgur.com/h30ACrk.png"></img><br><hr>
 <img src="http://i.imgur.com/hG0vCNn.png"></img><br><hr>
+<img src="http://i.imgur.com/InQBa6b.png"></img><br><hr>
