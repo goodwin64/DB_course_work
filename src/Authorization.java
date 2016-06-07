@@ -96,6 +96,7 @@ public class Authorization extends JFrame {
 
         try {
             if (rs != null && rs.next()) {
+                //  WARNING! this trick is may be unsafe
                 loggedUserID = rs.getInt("id");
                 loggedUserType = rs.getInt("type");
             } else {
@@ -108,19 +109,19 @@ public class Authorization extends JFrame {
 
         switch (loggedUserType) {
             case 1:
-                NewTask.main(new String[]{});
+                CustomerNewTask.main(new String[]{});
                 this.dispose();
                 break;
             case 2:
-                TakeTask.main(new String[]{});
+                ExecutorTakeTask.main(new String[]{});
                 this.dispose();
                 break;
             case 3:
-                // TODO: 06.05.2016 Admin panel
+                AdminPanel.main(new String[]{});
                 this.dispose();
                 break;
             default:
-                // There is an error somewhere
+                // There is an error somewhere, no such type of users
                 break;
         }
     }
